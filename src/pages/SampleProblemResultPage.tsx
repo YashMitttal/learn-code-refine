@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 const SampleProblemResultPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const testResults = sampleProblem.testResults;
+  const testResults = sampleProblem.testResults || [];
   
   useEffect(() => {
     // Update the sample problem status when viewing results
