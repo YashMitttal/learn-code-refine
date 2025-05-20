@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { LogIn, UserPlus, ArrowRight } from "lucide-react";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
 const LoginPage = () => {
   const { toast } = useToast();
@@ -19,9 +19,6 @@ const LoginPage = () => {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
-  // Check if user has completed onboarding before
-  const [hasCompletedOnboarding] = useLocalStorage("onboarding-complete", false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,14 +34,10 @@ const LoginPage = () => {
       
       toast({
         title: "Logged in successfully",
-        description: hasCompletedOnboarding ? "Redirecting to problems page..." : "Redirecting to onboarding...",
+        description: "Redirecting to onboarding...",
       });
-      
       setIsLoading(false);
-      
-      // If user has completed onboarding before, redirect to problems page
-      // Otherwise, redirect to onboarding
-      navigate(hasCompletedOnboarding ? "/problems" : "/onboarding");
+      navigate("/onboarding");
     }, 1500);
   };
 

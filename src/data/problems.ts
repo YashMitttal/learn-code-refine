@@ -25,15 +25,6 @@ export interface Problem {
     python?: string;
     java?: string;
   };
-  testResults?: {
-    id: number;
-    name: string;
-    input: string;
-    expected: string;
-    output: string;
-    passed: boolean;
-    explanation?: string;
-  }[];
 }
 
 export const problems: Problem[] = [

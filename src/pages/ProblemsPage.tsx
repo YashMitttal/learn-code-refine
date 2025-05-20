@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Filter, Tag, CheckCircle, Eye } from "lucide-react";
@@ -21,32 +20,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { problems, Problem } from "@/data/problems";
-import { getSampleProblemStatus } from "@/data/sampleProblem";
 
 const ProblemsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<string | undefined>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [filteredProblems, setFilteredProblems] = useState<Problem[]>([]);
-  const [sampleProblem, setSampleProblem] = useState<Problem>(getSampleProblemStatus());
-  
-  // Combine problems with sample problem
-  const allProblems = [sampleProblem, ...problems];
+  const [filteredProblems, setFilteredProblems] = useState<Problem[]>(problems);
 
   const allTags = Array.from(
-    new Set(allProblems.flatMap(problem => problem.tags))
+    new Set(problems.flatMap(problem => problem.tags))
   ).sort();
 
   useEffect(() => {
-    // Refresh sample problem status when component mounts
-    setSampleProblem(getSampleProblemStatus());
-  }, []);
-
-  useEffect(() => {
-    // Type assertion to ensure all elements conform to Problem type
-    const combinedProblems: Problem[] = [sampleProblem as Problem, ...problems];
-    
-    let result = combinedProblems;
+    let result = problems;
 
     // Filter by search query
     if (searchQuery) {
@@ -58,7 +44,7 @@ const ProblemsPage = () => {
     }
 
     // Filter by difficulty
-    if (difficultyFilter && difficultyFilter !== "all") {
+    if (difficultyFilter) {
       result = result.filter(problem => 
         problem.difficulty === difficultyFilter
       );
@@ -72,7 +58,7 @@ const ProblemsPage = () => {
     }
 
     setFilteredProblems(result);
-  }, [searchQuery, difficultyFilter, selectedTags, sampleProblem, problems]);
+  }, [searchQuery, difficultyFilter, selectedTags]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev =>
@@ -84,7 +70,7 @@ const ProblemsPage = () => {
 
   const clearFilters = () => {
     setSearchQuery("");
-    setDifficultyFilter("all");
+    setDifficultyFilter("");
     setSelectedTags([]);
   };
 
@@ -169,7 +155,7 @@ const ProblemsPage = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {(searchQuery || difficultyFilter !== "all" || selectedTags.length > 0) && (
+            {(searchQuery || difficultyFilter || selectedTags.length > 0) && (
               <Button variant="ghost" size="sm" onClick={clearFilters} className="h-10">
                 Clear Filters
               </Button>
@@ -179,7 +165,7 @@ const ProblemsPage = () => {
         
         <div className="flex justify-between items-center text-sm">
           <span className="text-muted-foreground">
-            Showing {filteredProblems.length} of {allProblems.length} problems
+            Showing {filteredProblems.length} of {problems.length} problems
           </span>
           
           {/* Sample Result Link */}
@@ -194,21 +180,13 @@ const ProblemsPage = () => {
       <div className="space-y-4">
         {filteredProblems.length > 0 ? (
           filteredProblems.map((problem) => (
-            <Card 
-              key={problem.id} 
-              className={`glass-card overflow-hidden hover:border-primary/50 transition-all ${
-                problem.id === "sample-problem" ? "border border-primary/30" : ""
-              }`}
-            >
-              <Link to={problem.id === "sample-problem" ? "/sample-problem-result" : `/problem/${problem.id}`} className="block">
+            <Card key={problem.id} className="glass-card overflow-hidden hover:border-primary/50 transition-all">
+              <Link to={`/problem/${problem.id}`} className="block">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-semibold text-lg mb-1">
-                        {problem.title}
-                        {problem.id === "sample-problem" && (
-                          <Badge variant="secondary" className="ml-2">Sample</Badge>
-                        )}
+                        {problem.id}. {problem.title}
                       </h3>
                       <div className="flex flex-wrap gap-2 mb-3">
                         {problem.tags.map((tag) => (
@@ -232,9 +210,9 @@ const ProblemsPage = () => {
                   </div>
                   {problem.lastAttempt && (
                     <div className="flex items-center">
-                      {problem.lastAttempt.status === "Accepted" && (
+                      {problem.lastAttempt.status === "Accepted" ? (
                         <CheckCircle className="h-4 w-4 text-green-500 mr-1" />
-                      )}
+                      ) : null}
                       <span className={`text-sm ${
                         problem.lastAttempt.status === "Accepted" ? "text-green-500" : "text-muted-foreground"
                       }`}>
