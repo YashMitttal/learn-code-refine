@@ -2,11 +2,24 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Code, CheckCircle, Brain, BarChart, Eye, Shield } from "lucide-react";
+import { 
+  ChevronRight, 
+  Code, 
+  CheckCircle, 
+  Brain, 
+  BarChart, 
+  Eye, 
+  Shield, 
+  Users, 
+  Sparkles,
+  Laptop,
+  Star
+} from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const HomePage = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
 
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -226,6 +239,178 @@ const HomePage = () => {
               </p>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section - NEW SECTION */}
+      <section ref={testimonialsRef} className="py-20 bg-gradient-to-b from-transparent to-background/40">
+        <div className="container">
+          <AnimatedSection animation="fade-in">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">What Our Users Say</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Join thousands of developers who have improved their coding skills with OpenJudge.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <AnimatedSection animation="float-up" delay="0ms" className="glass-card rounded-xl p-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+                    <Users className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium">Sarah Johnson</h4>
+                    <p className="text-sm text-muted-foreground">Software Engineer</p>
+                  </div>
+                </div>
+                <div className="mb-4 flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground">
+                  "OpenJudge's transparent approach to test cases completely changed how I learn algorithms. 
+                  Being able to see all test cases, including edge cases, has drastically improved my problem-solving skills."
+                </p>
+              </AnimatedSection>
+              
+              <AnimatedSection animation="float-up" delay="200ms" className="glass-card rounded-xl p-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+                    <Laptop className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium">Michael Chen</h4>
+                    <p className="text-sm text-muted-foreground">CS Student</p>
+                  </div>
+                </div>
+                <div className="mb-4 flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground">
+                  "As a student, the detailed feedback and visible test cases have been invaluable. 
+                  Instead of just getting 'wrong answer', I can see exactly where my solution fails and why."
+                </p>
+              </AnimatedSection>
+              
+              <AnimatedSection animation="float-up" delay="400ms" className="glass-card rounded-xl p-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+                    <Code className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium">Alex Rodriguez</h4>
+                    <p className="text-sm text-muted-foreground">Senior Developer</p>
+                  </div>
+                </div>
+                <div className="mb-4 flex">
+                  {[...Array(4)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                  ))}
+                  <Star className="h-4 w-4 text-yellow-400" />
+                </div>
+                <p className="text-muted-foreground">
+                  "I use OpenJudge to prepare for technical interviews. The transparency helps me understand 
+                  edge cases better than any other platform I've tried. My interview performance has improved dramatically."
+                </p>
+              </AnimatedSection>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Statistics Section - NEW SECTION */}
+      <section className="py-20">
+        <div className="container">
+          <AnimatedSection animation="reveal-left">
+            <div className="glass-card rounded-xl p-12">
+              <div className="grid md:grid-cols-4 gap-8 text-center">
+                <div>
+                  <h3 className="text-4xl font-bold mb-2 animated-gradient-text">500+</h3>
+                  <p className="text-muted-foreground">Coding Problems</p>
+                </div>
+                <div>
+                  <h3 className="text-4xl font-bold mb-2 animated-gradient-text">10K+</h3>
+                  <p className="text-muted-foreground">Active Users</p>
+                </div>
+                <div>
+                  <h3 className="text-4xl font-bold mb-2 animated-gradient-text">3</h3>
+                  <p className="text-muted-foreground">Programming Languages</p>
+                </div>
+                <div>
+                  <h3 className="text-4xl font-bold mb-2 animated-gradient-text">100%</h3>
+                  <p className="text-muted-foreground">Transparent Tests</p>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Latest Features Section - NEW SECTION */}
+      <section className="py-20">
+        <div className="container">
+          <AnimatedSection animation="fade-in">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">Latest Features</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                We're constantly improving the platform based on user feedback.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <AnimatedSection animation="reveal-left" delay="0ms" className="glass-card rounded-xl p-8">
+                <div className="rounded-full w-12 h-12 bg-primary/20 flex items-center justify-center mb-6">
+                  <Sparkles className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">AI-Powered Hints</h3>
+                <p className="text-muted-foreground mb-4">
+                  Get intelligent hints when you're stuck, tailored to your specific approach to the problem.
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Contextual suggestions based on your code</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Multiple levels of hints from subtle to direct</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Conceptual explanations to build understanding</span>
+                  </li>
+                </ul>
+              </AnimatedSection>
+              
+              <AnimatedSection animation="reveal-right" delay="200ms" className="glass-card rounded-xl p-8">
+                <div className="rounded-full w-12 h-12 bg-primary/20 flex items-center justify-center mb-6">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Community Solutions</h3>
+                <p className="text-muted-foreground mb-4">
+                  Learn from others by exploring community-contributed solutions with detailed explanations.
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Browse solutions in multiple languages</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Filter by efficiency and approach</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                    <span>Contribute your own solutions with explanations</span>
+                  </li>
+                </ul>
+              </AnimatedSection>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 

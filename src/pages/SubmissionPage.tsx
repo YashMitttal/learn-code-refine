@@ -3,15 +3,19 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
+import { updateSampleProblemStatus } from "@/data/sampleProblem";
 
 const SubmissionPage = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Automatically go back to problems page after a delay (optional)
+    // Update the sample problem status when submitted
+    updateSampleProblemStatus();
+    
+    // Automatically go to results after a delay
     const timer = setTimeout(() => {
-      // navigate('/problems');
-    }, 10000);
+      navigate('/sample-problem-result');
+    }, 3000);
     
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -20,7 +24,7 @@ const SubmissionPage = () => {
     <div className="container flex items-center justify-center min-h-[calc(100vh-200px)] py-12">
       <div className="max-w-lg w-full text-center">
         <div className="flex justify-center mb-6">
-          <div className="rounded-full bg-green-100 p-3">
+          <div className="rounded-full bg-green-100/20 p-3">
             <CheckCircle className="h-12 w-12 text-green-600" />
           </div>
         </div>
@@ -33,7 +37,7 @@ const SubmissionPage = () => {
         {/* Loading animation */}
         <div className="flex justify-center mb-8">
           <div className="relative w-64 h-4 bg-secondary rounded-full overflow-hidden">
-            <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-codeblue-600 to-codepurple-600 animate-pulse rounded-full" style={{ width: '100%' }}></div>
+            <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary/60 to-primary rounded-full animate-pulse" style={{ width: '100%' }}></div>
           </div>
         </div>
         
@@ -46,10 +50,10 @@ const SubmissionPage = () => {
             Return to Problems
           </Button>
           <Button 
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/sample-problem-result')}
             className="flex-1"
           >
-            Back to Problem
+            View Results
           </Button>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Filter, Tag, CheckCircle, Eye } from "lucide-react";
@@ -20,19 +21,29 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { problems, Problem } from "@/data/problems";
+import { getSampleProblemStatus } from "@/data/sampleProblem";
 
 const ProblemsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<string | undefined>("");
+  const [difficultyFilter, setDifficultyFilter] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [filteredProblems, setFilteredProblems] = useState<Problem[]>(problems);
+  const [filteredProblems, setFilteredProblems] = useState<Problem[]>([]);
+  const [sampleProblem, setSampleProblem] = useState(getSampleProblemStatus());
+  
+  // Combine problems with sample problem
+  const allProblems = [sampleProblem, ...problems];
 
   const allTags = Array.from(
-    new Set(problems.flatMap(problem => problem.tags))
+    new Set(allProblems.flatMap(problem => problem.tags))
   ).sort();
 
   useEffect(() => {
-    let result = problems;
+    // Refresh sample problem status when component mounts
+    setSampleProblem(getSampleProblemStatus());
+  }, []);
+
+  useEffect(() => {
+    let result = allProblems;
 
     // Filter by search query
     if (searchQuery) {
@@ -44,7 +55,7 @@ const ProblemsPage = () => {
     }
 
     // Filter by difficulty
-    if (difficultyFilter) {
+    if (difficultyFilter && difficultyFilter !== "all") {
       result = result.filter(problem => 
         problem.difficulty === difficultyFilter
       );
@@ -58,7 +69,7 @@ const ProblemsPage = () => {
     }
 
     setFilteredProblems(result);
-  }, [searchQuery, difficultyFilter, selectedTags]);
+  }, [searchQuery, difficultyFilter, selectedTags, allProblems]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev =>
@@ -120,7 +131,7 @@ const ProblemsPage = () => {
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Difficulties</SelectItem>
+                <SelectItem value="">All Difficulties</SelectItem>
                 <SelectItem value="Easy">Easy</SelectItem>
                 <SelectItem value="Medium">Medium</SelectItem>
                 <SelectItem value="Hard">Hard</SelectItem>
@@ -165,7 +176,7 @@ const ProblemsPage = () => {
         
         <div className="flex justify-between items-center text-sm">
           <span className="text-muted-foreground">
-            Showing {filteredProblems.length} of {problems.length} problems
+            Showing {filteredProblems.length} of {allProblems.length} problems
           </span>
           
           {/* Sample Result Link */}
@@ -180,13 +191,21 @@ const ProblemsPage = () => {
       <div className="space-y-4">
         {filteredProblems.length > 0 ? (
           filteredProblems.map((problem) => (
-            <Card key={problem.id} className="glass-card overflow-hidden hover:border-primary/50 transition-all">
-              <Link to={`/problem/${problem.id}`} className="block">
+            <Card 
+              key={problem.id} 
+              className={`glass-card overflow-hidden hover:border-primary/50 transition-all ${
+                problem.id === "sample-problem" ? "border border-primary/30" : ""
+              }`}
+            >
+              <Link to={problem.id === "sample-problem" ? "/sample-problem-result" : `/problem/${problem.id}`} className="block">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-semibold text-lg mb-1">
-                        {problem.id}. {problem.title}
+                        {problem.title}
+                        {problem.id === "sample-problem" && (
+                          <Badge variant="secondary" className="ml-2">Sample</Badge>
+                        )}
                       </h3>
                       <div className="flex flex-wrap gap-2 mb-3">
                         {problem.tags.map((tag) => (
@@ -210,11 +229,11 @@ const ProblemsPage = () => {
                   </div>
                   {problem.lastAttempt && (
                     <div className="flex items-center">
-                      {problem.lastAttempt.status === "Accepted" ? (
+                      {problem.lastAttempt.status === "Completed" ? (
                         <CheckCircle className="h-4 w-4 text-green-500 mr-1" />
                       ) : null}
                       <span className={`text-sm ${
-                        problem.lastAttempt.status === "Accepted" ? "text-green-500" : "text-muted-foreground"
+                        problem.lastAttempt.status === "Completed" ? "text-green-500" : "text-muted-foreground"
                       }`}>
                         {problem.lastAttempt.status}
                       </span>

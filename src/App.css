@@ -7,6 +7,128 @@
   text-align: left;
 }
 
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Neon border effect */
+.neon-border {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  background: linear-gradient(45deg, #6a67ce, #61dafb, #FF007A);
+  background-size: 300% 300%;
+  animation: gradient-animation 6s ease infinite;
+  filter: blur(12px);
+  opacity: 0.5;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animated gradient text */
+.animated-gradient-text {
+  background: linear-gradient(-45deg, #6a67ce, #61dafb, #FF007A, #6a67ce);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-animation 6s ease infinite;
+}
+
+/* Code editor styling */
+.code-3d {
+  transform: perspective(1200px) rotateX(5deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.code-3d:hover {
+  transform: perspective(1200px) rotateX(0deg);
+}
+
+/* Syntax highlighting for code examples */
+.syntax-comment {
+  color: #6a9955;
+}
+
+.syntax-keyword {
+  color: #569cd6;
+}
+
+.syntax-function {
+  color: #dcdcaa;
+}
+
+/* Code font for examples */
+.font-code {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+/* Animation for floating elements */
+.floating {
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Animation for rotating elements */
+.rotating {
+  animation: rotating 30s linear infinite;
+}
+
+.animation-delay-1000 {
+  animation-delay: -10s;
+}
+
+.animation-delay-1500 {
+  animation-delay: -15s;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Keep the logo animation */
 @keyframes logo-spin {
   from {
