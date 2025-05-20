@@ -15,6 +15,8 @@ import ProblemDetailPage from "./pages/ProblemDetailPage";
 import SubmissionPage from "./pages/SubmissionPage";
 import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
+import AuthProtection from "./components/AuthProtection";
+import SampleProblemResultPage from "./pages/SampleProblemResultPage";
 
 const queryClient = new QueryClient();
 
@@ -31,9 +33,26 @@ const App = () => (
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/onboarding" element={<OnboardingPage />} />
-              <Route path="/problems" element={<ProblemsPage />} />
-              <Route path="/problem/:id" element={<ProblemDetailPage />} />
-              <Route path="/submission-success" element={<SubmissionPage />} />
+              <Route path="/problems" element={
+                <AuthProtection>
+                  <ProblemsPage />
+                </AuthProtection>
+              } />
+              <Route path="/problem/:id" element={
+                <AuthProtection>
+                  <ProblemDetailPage />
+                </AuthProtection>
+              } />
+              <Route path="/submission-success" element={
+                <AuthProtection>
+                  <SubmissionPage />
+                </AuthProtection>
+              } />
+              <Route path="/sample-problem-result" element={
+                <AuthProtection>
+                  <SampleProblemResultPage />
+                </AuthProtection>
+              } />
               <Route path="/about" element={<AboutPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

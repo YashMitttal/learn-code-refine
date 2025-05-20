@@ -8,47 +8,6 @@
 
 @layer base {
   :root {
-    --background: 225 30% 97%;
-    --foreground: 222 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 253 70% 60%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-
-    --accent: 185 80% 40%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
 
@@ -90,7 +49,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border selection:bg-white/10 selection:text-white;
   }
 
   body {
@@ -131,4 +90,69 @@
 
 .animation-delay-1500 {
   animation-delay: 1500ms;
+}
+
+/* 3D Animation Effects */
+.floating {
+  animation: floating 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.rotating {
+  animation: rotating 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.glass-card {
+  @apply backdrop-blur-lg bg-white/5 border border-white/10;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.neon-border {
+  box-shadow: 0 0 5px #6E54B6, 0 0 10px #6E54B6, 0 0 15px #6E54B6;
+}
+
+.neo-blur {
+  backdrop-filter: blur(16px);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Code Highlighting */
+.syntax-keyword { color: #ff79c6; }
+.syntax-string { color: #f1fa8c; }
+.syntax-comment { color: #6272a4; }
+.syntax-number { color: #bd93f9; }
+.syntax-function { color: #50fa7b; }
+
+/* 3D Code Block */
+.code-3d {
+  transform: perspective(1000px) rotateX(10deg);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.code-3d:hover {
+  transform: perspective(1000px) rotateX(0deg);
 }
