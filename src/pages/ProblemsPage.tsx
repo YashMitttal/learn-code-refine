@@ -25,7 +25,7 @@ import { getSampleProblemStatus } from "@/data/sampleProblem";
 
 const ProblemsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<string>("");
+  const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [filteredProblems, setFilteredProblems] = useState<Problem[]>([]);
   const [sampleProblem, setSampleProblem] = useState<Problem>(getSampleProblemStatus());
@@ -84,7 +84,7 @@ const ProblemsPage = () => {
 
   const clearFilters = () => {
     setSearchQuery("");
-    setDifficultyFilter("");
+    setDifficultyFilter("all");
     setSelectedTags([]);
   };
 
@@ -134,7 +134,7 @@ const ProblemsPage = () => {
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Difficulties</SelectItem>
+                <SelectItem value="all">All Difficulties</SelectItem>
                 <SelectItem value="Easy">Easy</SelectItem>
                 <SelectItem value="Medium">Medium</SelectItem>
                 <SelectItem value="Hard">Hard</SelectItem>
@@ -169,7 +169,7 @@ const ProblemsPage = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {(searchQuery || difficultyFilter || selectedTags.length > 0) && (
+            {(searchQuery || difficultyFilter !== "all" || selectedTags.length > 0) && (
               <Button variant="ghost" size="sm" onClick={clearFilters} className="h-10">
                 Clear Filters
               </Button>

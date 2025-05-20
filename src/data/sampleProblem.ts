@@ -29,7 +29,6 @@ export const sampleProblem: Problem = {
     }
   ],
   languages: ["Python", "Java", "JavaScript"],
-  // Add required properties from Problem interface
   constraints: [
     "2 <= nums.length <= 10^4",
     "-10^9 <= nums[i] <= 10^9",
@@ -48,8 +47,7 @@ export const sampleProblem: Problem = {
   ],
   lastAttempt: {
     date: "2023-05-20",
-    status: "Accepted", // Changed from "Attempted" to "Accepted" to match Problem interface
-    language: "Python"
+    status: "Accepted" // Changed from "Attempted" to "Accepted" to match Problem interface
   },
   testResults: [
     {
@@ -102,8 +100,7 @@ export const updateSampleProblemStatus = () => {
     ...sampleProblem,
     lastAttempt: {
       date: new Date().toISOString().split('T')[0],
-      status: "Accepted", // Changed from "Completed" to "Accepted"
-      language: "Python"
+      status: "Accepted" // Changed from "Completed" to "Accepted"
     }
   };
   
