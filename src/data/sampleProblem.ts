@@ -1,5 +1,7 @@
 
-export const sampleProblem = {
+import { Problem } from "./problems";
+
+export const sampleProblem: Problem = {
   id: "sample-problem",
   title: "Sample Problem: Two Sum",
   description: `Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
@@ -27,9 +29,26 @@ export const sampleProblem = {
     }
   ],
   languages: ["Python", "Java", "JavaScript"],
+  // Add required properties from Problem interface
+  constraints: [
+    "2 <= nums.length <= 10^4",
+    "-10^9 <= nums[i] <= 10^9",
+    "-10^9 <= target <= 10^9",
+    "Only one valid answer exists."
+  ],
+  testCases: [
+    {
+      input: "[2,7,11,15]\n9",
+      output: "[0,1]"
+    },
+    {
+      input: "[3,2,4]\n6",
+      output: "[1,2]"
+    }
+  ],
   lastAttempt: {
     date: "2023-05-20",
-    status: "Attempted",
+    status: "Accepted", // Changed from "Attempted" to "Accepted" to match Problem interface
     language: "Python"
   },
   testResults: [
@@ -83,7 +102,7 @@ export const updateSampleProblemStatus = () => {
     ...sampleProblem,
     lastAttempt: {
       date: new Date().toISOString().split('T')[0],
-      status: "Completed",
+      status: "Accepted", // Changed from "Completed" to "Accepted"
       language: "Python"
     }
   };

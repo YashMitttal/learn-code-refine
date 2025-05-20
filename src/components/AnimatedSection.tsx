@@ -21,7 +21,10 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           entry.target.classList.add(`animate-${animation}`);
-          entry.target.style.animationDelay = delay;
+          // Use HTMLElement instead of Element to access style property
+          if (entry.target instanceof HTMLElement) {
+            entry.target.style.animationDelay = delay;
+          }
           observer.unobserve(entry.target);
         }
       },

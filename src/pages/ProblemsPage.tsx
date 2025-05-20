@@ -28,7 +28,7 @@ const ProblemsPage = () => {
   const [difficultyFilter, setDifficultyFilter] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [filteredProblems, setFilteredProblems] = useState<Problem[]>([]);
-  const [sampleProblem, setSampleProblem] = useState(getSampleProblemStatus());
+  const [sampleProblem, setSampleProblem] = useState<Problem>(getSampleProblemStatus());
   
   // Combine problems with sample problem
   const allProblems = [sampleProblem, ...problems];
@@ -43,7 +43,10 @@ const ProblemsPage = () => {
   }, []);
 
   useEffect(() => {
-    let result = allProblems;
+    // Type assertion to ensure all elements conform to Problem type
+    const combinedProblems: Problem[] = [sampleProblem as Problem, ...problems];
+    
+    let result = combinedProblems;
 
     // Filter by search query
     if (searchQuery) {
@@ -69,7 +72,7 @@ const ProblemsPage = () => {
     }
 
     setFilteredProblems(result);
-  }, [searchQuery, difficultyFilter, selectedTags, allProblems]);
+  }, [searchQuery, difficultyFilter, selectedTags, sampleProblem, problems]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev =>
@@ -229,11 +232,11 @@ const ProblemsPage = () => {
                   </div>
                   {problem.lastAttempt && (
                     <div className="flex items-center">
-                      {problem.lastAttempt.status === "Completed" ? (
+                      {problem.lastAttempt.status === "Accepted" && (
                         <CheckCircle className="h-4 w-4 text-green-500 mr-1" />
-                      ) : null}
+                      )}
                       <span className={`text-sm ${
-                        problem.lastAttempt.status === "Completed" ? "text-green-500" : "text-muted-foreground"
+                        problem.lastAttempt.status === "Accepted" ? "text-green-500" : "text-muted-foreground"
                       }`}>
                         {problem.lastAttempt.status}
                       </span>
